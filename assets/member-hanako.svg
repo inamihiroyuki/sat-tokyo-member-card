@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" role="img" aria-label="Fictional member portrait">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#eef3f7"/>
+      <stop offset="1" stop-color="#d9e4ed"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#24211f"/>
+      <stop offset="0.62" stop-color="#34302c"/>
+      <stop offset="1" stop-color="#5c5750"/>
+    </linearGradient>
+    <linearGradient id="jacket" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#295d86"/>
+      <stop offset="1" stop-color="#123d64"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="400" fill="url(#bg)"/>
+  <ellipse cx="160" cy="430" rx="130" ry="152" fill="url(#jacket)"/>
+  <path d="M96 332c12-48 40-72 64-72s52 24 64 72c-22 23-43 34-64 34s-42-11-64-34Z" fill="#f2e9df"/>
+  <path d="M116 324c9-29 26-44 44-44s35 15 44 44c-13 14-28 22-44 22s-31-8-44-22Z" fill="#f6d1bd"/>
+  <path d="M70 160c0-73 43-119 93-119 56 0 94 49 91 122-2 55-22 93-28 130-28 4-48-10-57-31-4-9-6-20-6-35l-20 3c-5 31-25 60-58 63-7-42-15-73-15-133Z" fill="url(#hair)"/>
+  <path d="M93 167c0-58 27-96 68-96 42 0 69 39 69 96 0 64-31 111-69 111s-68-47-68-111Z" fill="#f5cdb9"/>
+  <path d="M105 158c13-17 36-29 59-31 21-2 43 5 56 21-4-49-28-78-59-78-33 0-54 31-56 88Z" fill="url(#hair)"/>
+  <path d="M99 183c-14-4-20 7-17 23 3 17 14 27 25 24l-8-47Z" fill="#edbfa9"/>
+  <path d="M223 183c14-4 20 7 17 23-3 17-14 27-25 24l8-47Z" fill="#edbfa9"/>
+  <path d="M123 174c10-8 25-8 35-2" fill="none" stroke="#3b2f2a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M168 172c11-6 26-5 35 3" fill="none" stroke="#3b2f2a" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="140" cy="193" rx="6" ry="5" fill="#2d2521"/>
+  <ellipse cx="188" cy="193" rx="6" ry="5" fill="#2d2521"/>
+  <path d="M162 197c-2 17-8 28-13 40 8 6 19 7 27 0" fill="none" stroke="#c28b78" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M139 250c14 11 34 11 48 0" fill="none" stroke="#a55355" stroke-width="5" stroke-linecap="round"/>
+  <path d="M116 136c29 9 73 5 99-16 16 26 18 58 15 91 15-48 8-112-29-142-35-29-89-15-111 22-23 39-10 90 9 121-1-35 4-60 17-76Z" fill="url(#hair)"/>
+  <path d="M111 133c16-34 45-55 85-58" fill="none" stroke="#706a63" stroke-width="5" stroke-linecap="round" opacity=".65"/>
+  <path d="M226 143c8 36 7 76-7 119" fill="none" stroke="#706a63" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+  <path d="M88 365c39 20 103 21 145 0 13 10 22 21 28 35H59c6-14 16-26 29-35Z" fill="#ffffff" opacity=".9"/>
+</svg>

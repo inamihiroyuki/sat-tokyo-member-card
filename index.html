@@ -1,0 +1,1192 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>東京都スキー連盟 会員マイページ UXモック</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23092f57'/%3E%3Cpath d='M7 21 15 7l4 7 2-3 5 10H7Z' fill='white'/%3E%3Cpath d='M7 23h18' stroke='%23d7242f' stroke-width='3'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --blue-900: #092f57;
+      --blue-700: #0d5ea8;
+      --blue-600: #1673c9;
+      --blue-050: #edf7ff;
+      --red-600: #d7242f;
+      --ink: #172333;
+      --muted: #657386;
+      --line: #d8e1ec;
+      --panel: #ffffff;
+      --snow: #f7fbff;
+      --green: #127d52;
+      --amber: #a46100;
+      --shadow: 0 18px 50px rgba(9, 47, 87, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #f3f8fd 0%, #ffffff 52%, #eef5fb 100%);
+      letter-spacing: 0;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px clamp(16px, 4vw, 42px);
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid rgba(216, 225, 236, 0.85);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      display: block;
+      width: auto;
+      height: 42px;
+      max-width: min(280px, 46vw);
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .step-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 30px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: #fff;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .step-pill.active {
+      color: #fff;
+      border-color: var(--blue-700);
+      background: var(--blue-700);
+    }
+
+    main {
+      width: 100%;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .login-hero {
+      min-height: calc(100vh - 71px);
+      position: relative;
+      display: grid;
+      align-items: center;
+      padding: clamp(24px, 5vw, 64px);
+      overflow: hidden;
+    }
+
+    .login-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(247,251,255,0.96) 0%, rgba(247,251,255,0.9) 42%, rgba(247,251,255,0.42) 74%, rgba(247,251,255,0.82) 100%),
+        url("assets/ski-bg.jpg") center right / cover no-repeat;
+      transform: scale(1.01);
+    }
+
+    .login-hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 24%;
+      background:
+        radial-gradient(ellipse at 30% 100%, rgba(13,94,168,0.13), transparent 52%),
+        linear-gradient(180deg, transparent, rgba(255,255,255,0.98));
+    }
+
+    .login-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(320px, 460px);
+      align-items: center;
+      justify-content: end;
+      max-width: 1040px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-700);
+      font-size: 13px;
+      font-weight: 700;
+      margin: 0 0 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 3px;
+      background: var(--red-600);
+      border-radius: 3px;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--blue-900);
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+
+    .card {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(216, 225, 236, 0.95);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .login-card {
+      padding: 26px;
+    }
+
+    .card-title {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .card-title h2 {
+      margin: 0;
+      color: var(--blue-900);
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--blue-050);
+      color: var(--blue-700);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    label {
+      display: block;
+      color: #31445b;
+      font-weight: 700;
+      font-size: 13px;
+      margin: 16px 0 8px;
+    }
+
+    input {
+      width: 100%;
+      height: 50px;
+      border: 1px solid #bfccd9;
+      border-radius: 6px;
+      background: #fff;
+      padding: 0 14px;
+      color: var(--ink);
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--blue-600);
+      box-shadow: 0 0 0 4px rgba(22, 115, 201, 0.13);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 10px 0 0;
+    }
+
+    .primary,
+    .secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      padding: 0 18px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .primary {
+      width: 100%;
+      margin-top: 20px;
+      color: #fff;
+      background: var(--blue-700);
+      box-shadow: 0 10px 24px rgba(13, 94, 168, 0.22);
+    }
+
+    .primary:hover {
+      background: var(--blue-900);
+    }
+
+    .secondary {
+      color: var(--blue-700);
+      background: #fff;
+      border-color: var(--line);
+    }
+
+    .secondary:hover {
+      border-color: var(--blue-600);
+    }
+
+    .notice {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f6f9fc;
+      border: 1px solid var(--line);
+      color: #40556e;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .notice svg {
+      flex: 0 0 auto;
+      color: var(--green);
+      margin-top: 2px;
+    }
+
+    .mock-note {
+      position: relative;
+      margin-top: 16px;
+      padding: 18px 14px 14px;
+      border: 2px solid #f28c28;
+      border-radius: 8px;
+      background: rgba(255, 247, 235, 0.96);
+      color: #714008;
+      box-shadow: 0 10px 24px rgba(169, 98, 9, 0.12);
+      font-size: 12px;
+      line-height: 1.65;
+      animation: mockFloat 5s ease-in-out infinite;
+    }
+
+    .mock-note::before {
+      content: "モック注釈";
+      position: absolute;
+      top: -11px;
+      left: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f28c28;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+
+    .mock-note b {
+      display: block;
+      color: #8b4d04;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .mock-note p {
+      margin: 0;
+      color: #714008;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .mock-note ul {
+      margin: 6px 0 0;
+      padding-left: 1.2em;
+    }
+
+    .mock-note li + li {
+      margin-top: 4px;
+    }
+
+    @keyframes mockFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(9, 27, 46, 0.52);
+    }
+
+    .modal-backdrop.show {
+      display: grid;
+    }
+
+    .modal {
+      width: min(100%, 430px);
+      padding: 24px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    .modal h2 {
+      margin: 0 0 8px;
+      color: var(--blue-900);
+      font-size: 22px;
+    }
+
+    .modal p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .otp-row {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      margin: 20px 0 14px;
+    }
+
+    .otp-row input {
+      height: 50px;
+      padding: 0;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .dashboard {
+      min-height: calc(100vh - 71px);
+      background:
+        linear-gradient(180deg, rgba(237,247,255,0.82), rgba(255,255,255,0.98) 38%),
+        linear-gradient(90deg, rgba(9,47,87,0.07), transparent 38%);
+      padding: clamp(20px, 4vw, 42px);
+    }
+
+    .dashboard-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .dashboard-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .dashboard-head h1 {
+      font-size: clamp(26px, 4vw, 38px);
+    }
+
+    .dashboard-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(310px, 0.9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .main-column,
+    .side-column {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 10px 28px rgba(9, 47, 87, 0.08);
+    }
+
+    .panel h2 {
+      margin: 0 0 14px;
+      color: var(--blue-900);
+      font-size: 18px;
+    }
+
+    .member-summary {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 84px;
+      height: 84px;
+      border-radius: 8px;
+      background: #d9e8f6;
+      border: 1px solid #c6d7e8;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+    }
+
+    .member-summary h2 {
+      margin: 0 0 6px;
+      font-size: 24px;
+    }
+
+    .member-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 30px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status.good {
+      color: var(--green);
+      background: #eaf8f1;
+    }
+
+    .status.warn {
+      color: var(--amber);
+      background: #fff5df;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .info-item {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+      min-height: 76px;
+    }
+
+    .info-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .info-item b {
+      display: block;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline-row:last-child {
+      border-bottom: 0;
+    }
+
+    .timeline-row time {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .timeline-row strong {
+      color: #26394f;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .wallet-card {
+      background:
+        linear-gradient(145deg, rgba(9,47,87,0.98), rgba(14,91,157,0.96)),
+        #092f57;
+      color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 16px 40px rgba(9, 47, 87, 0.26);
+    }
+
+    .wallet-card h2 {
+      color: #fff;
+      margin: 0 0 14px;
+    }
+
+    .pass-preview {
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.15), transparent 48%),
+        rgba(255,255,255,0.08);
+      padding: 16px;
+    }
+
+    .pass-top {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .pass-body {
+      display: grid;
+      grid-template-columns: 68px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+    }
+
+    .pass-photo {
+      width: 68px;
+      height: 82px;
+      border-radius: 6px;
+      background: #e6eef7;
+      border: 2px solid rgba(255,255,255,0.65);
+      overflow: hidden;
+    }
+
+    .pass-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+    }
+
+    .pass-body b {
+      display: block;
+      font-size: 20px;
+      line-height: 1.25;
+      margin-bottom: 5px;
+    }
+
+    .pass-body span {
+      display: block;
+      color: rgba(255,255,255,0.82);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .qr {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      width: 102px;
+      height: 102px;
+      padding: 8px;
+      margin: 16px auto 0;
+      background: #fff;
+      border-radius: 6px;
+    }
+
+    .qr i {
+      display: block;
+      background: #071b2f;
+      border-radius: 1px;
+    }
+
+    .qr i.blank {
+      background: transparent;
+    }
+
+    .wallet-actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .wallet-help {
+      margin: 16px 0 0;
+      color: rgba(255,255,255,0.88);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .wallet-badge-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      width: 100%;
+      max-width: 100%;
+      text-decoration: none;
+    }
+
+    .wallet-badge-link img {
+      display: block;
+      width: auto;
+      height: 48px;
+      max-width: 100%;
+    }
+
+    .wallet-badge-placeholder {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      width: 100%;
+      max-width: 100%;
+      gap: 10px;
+      border: 1px solid #3c4043;
+      border-radius: 999px;
+      background: #202124;
+      color: #fff;
+      font-size: clamp(13px, 3.35vw, 16px);
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.2;
+      padding: 0 14px;
+      white-space: nowrap;
+    }
+
+    .wallet-badge-placeholder svg {
+      flex: 0 0 auto;
+    }
+
+    .wallet-icon-google {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      overflow: hidden;
+      flex: 0 0 auto;
+      background:
+        linear-gradient(180deg, #34a853 0 25%, #fbbc04 25% 50%, #4285f4 50% 75%, #ea4335 75% 100%);
+    }
+
+    .wallet-icon-google::after {
+      content: "";
+      position: absolute;
+      inset: 6px 0 auto 0;
+      height: 12px;
+      background: rgba(255,255,255,0.16);
+      transform: skewY(9deg);
+    }
+
+    .wallet-card .mock-note {
+      background: rgba(255, 247, 235, 0.98);
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 70;
+      display: none;
+      max-width: min(360px, calc(100vw - 36px));
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: #10283f;
+      color: #fff;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.24);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 900px) {
+      .progress {
+        display: none;
+      }
+
+      .login-layout,
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .login-hero {
+        align-items: start;
+      }
+
+      .login-layout {
+        gap: 24px;
+        justify-content: center;
+      }
+
+      .dashboard-head {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar {
+        padding: 12px 14px;
+      }
+
+      .brand strong {
+        font-size: 13px;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .brand-logo {
+        height: 34px;
+        max-width: min(230px, 62vw);
+      }
+
+      .login-hero,
+      .dashboard {
+        padding: 18px 14px 28px;
+      }
+
+      .login-card,
+      .panel,
+      .wallet-card {
+        padding: 16px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .modal-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mock-note {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand" aria-label="東京都スキー連盟 会員マイページ">
+        <img class="brand-logo" src="assets/logo_mark.png" alt="一般財団法人 東京都スキー連盟">
+        <div>
+          <strong>会員マイページ</strong>
+          <span>Member Portal</span>
+        </div>
+      </div>
+      <nav class="progress" aria-label="UXステップ">
+        <span class="step-pill active" data-step-pill="login">1 ログイン</span>
+        <span class="step-pill" data-step-pill="sms">2 コード確認</span>
+        <span class="step-pill" data-step-pill="mypage">3 マイページ</span>
+        <span class="step-pill" data-step-pill="wallet">4 Wallet追加</span>
+      </nav>
+    </header>
+
+    <main>
+      <section class="screen active" id="loginScreen" aria-labelledby="loginTitle">
+        <div class="login-hero">
+          <div class="login-layout">
+            <form class="card login-card" id="loginForm">
+              <div class="card-title">
+                <h2 id="loginTitle">東京都スキー連盟会員ログイン</h2>
+              </div>
+
+              <label for="memberNo">東京都スキー連盟会員番号</label>
+              <input id="memberNo" name="memberNo" inputmode="numeric" autocomplete="off" value="13001234">
+
+              <label for="mobileNo">携帯電話番号</label>
+              <input id="mobileNo" name="mobileNo" inputmode="tel" autocomplete="tel" value="09012345678">
+
+              <button class="primary" type="submit">
+                携帯電話にログインコードを送る
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <div class="mock-note">
+                <b>設計ポイント</b>
+                <p>パスワード不要。東京都スキー連盟会員番号と携帯電話番号を既存DBで照合し、登録済みの番号へ6桁のログインコードを送信します。既存DBはREAD ONLYで参照します。</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="mypageScreen" aria-labelledby="mypageTitle">
+        <div class="dashboard">
+          <div class="dashboard-inner">
+            <div class="dashboard-head">
+              <div>
+                <p class="eyebrow">ログイン完了</p>
+                <h1 id="mypageTitle">東京都スキー連盟会員マイページ</h1>
+              </div>
+              <button class="secondary" type="button" id="backToLogin">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M19 12H5m6 6-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                最初から見る
+              </button>
+            </div>
+
+            <div class="dashboard-grid">
+              <div class="main-column">
+                <section class="panel">
+                  <div class="member-summary">
+                    <div class="avatar">
+                      <img src="assets/member-hanako.svg" alt="都連花子の顔写真">
+                    </div>
+                    <div>
+                      <h2>都連花子</h2>
+                      <p class="hint">東京都スキー連盟会員番号 13001234 / 所属: 千代田スキークラブ</p>
+                      <div class="member-meta">
+                        <span class="status good">有効会員</span>
+                        <span class="status good">2026年度 会費支払済み</span>
+                        <span class="status good">顔写真 登録済み</span>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="panel">
+                  <h2>会員情報</h2>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <span>申込状況</span>
+                      <b>2026年度 登録承認済み</b>
+                    </div>
+                    <div class="info-item">
+                      <span>会員証有効期限</span>
+                      <b>2027年3月31日</b>
+                    </div>
+                    <div class="info-item">
+                      <span>資格情報</span>
+                      <b>準指導員 / SAJ会員</b>
+                    </div>
+                    <div class="info-item">
+                      <span>登録携帯番号</span>
+                      <b>090-****-5678</b>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="panel">
+                  <h2>研修・手続き履歴</h2>
+                  <div class="timeline">
+                    <div class="timeline-row">
+                      <time>2026/06/02</time>
+                      <strong>東京都スポーツ指導者研修会 申込済み</strong>
+                      <span class="status good">受付中</span>
+                    </div>
+                    <div class="timeline-row">
+                      <time>2026/05/18</time>
+                      <strong>2026年度 会費入金を確認</strong>
+                      <span class="status good">完了</span>
+                    </div>
+                    <div class="timeline-row">
+                      <time>2026/04/10</time>
+                      <strong>所属団体経由で会員登録更新</strong>
+                      <span class="status good">承認済み</span>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <aside class="side-column">
+                <section class="wallet-card" aria-labelledby="walletTitle">
+                  <h2 id="walletTitle">デジタル会員証</h2>
+                  <div class="pass-preview">
+                    <div class="pass-top">
+                      <span class="status good">有効</span>
+                    </div>
+                    <div class="pass-body">
+                      <div class="pass-photo">
+                        <img src="assets/member-hanako.svg" alt="都連花子の顔写真">
+                      </div>
+                      <div>
+                        <b>都連花子</b>
+                        <span>東京都スキー連盟会員番号 13001234</span>
+                        <span>千代田スキークラブ</span>
+                        <span>有効期限 2027/03/31</span>
+                      </div>
+                    </div>
+                    <div class="qr" aria-label="QRコード表示例">
+                      <i></i><i></i><i></i><i class="blank"></i><i></i><i class="blank"></i><i></i>
+                      <i></i><i class="blank"></i><i></i><i></i><i class="blank"></i><i></i><i class="blank"></i>
+                      <i></i><i></i><i class="blank"></i><i class="blank"></i><i></i><i></i><i></i>
+                      <i class="blank"></i><i></i><i class="blank"></i><i></i><i></i><i class="blank"></i><i></i>
+                      <i></i><i class="blank"></i><i></i><i></i><i class="blank"></i><i></i><i></i>
+                      <i class="blank"></i><i></i><i></i><i class="blank"></i><i></i><i class="blank"></i><i></i>
+                      <i></i><i class="blank"></i><i></i><i></i><i></i><i></i><i class="blank"></i>
+                    </div>
+                  </div>
+
+                  <p class="wallet-help">東京都スキー連盟会員のデジタル会員証をスマートフォンに登録すると、紛失の心配も無く、紙のカードと同じようにご利用頂けます。</p>
+                  <div class="wallet-actions" aria-label="Wallet追加ボタン">
+                    <a class="wallet-badge-link" href="#" id="addAppleWallet">
+                      <span class="wallet-badge-placeholder">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                          <path d="M16.4 3.5c-.7.1-1.6.5-2.1 1.1-.5.6-.8 1.4-.7 2.1.8.1 1.7-.4 2.2-.9.5-.6.8-1.4.6-2.3Z" fill="currentColor"/>
+                          <path d="M18.6 16.4c-.4.8-.6 1.2-1 1.9-.7 1-1.6 2.2-2.7 2.2-1 0-1.3-.6-2.7-.6s-1.7.6-2.7.6c-1.2 0-2-1.2-2.7-2.2-1.9-2.8-2.1-6.2-.9-8 .8-1.3 2-2 3.2-2 1.3 0 2.1.7 3.1.7 1 0 1.7-.7 3.2-.7 1.1 0 2.4.6 3.1 1.7-2.7 1.5-2.3 5.2.1 6.4Z" fill="currentColor"/>
+                        </svg>
+                        Appleウォレットに登録する
+                      </span>
+                    </a>
+                    <a class="wallet-badge-link" href="#" id="addGoogleWallet">
+                      <span class="wallet-badge-placeholder">
+                        <span class="wallet-icon-google" aria-hidden="true"></span>
+                        Googleウォレットに登録する
+                      </span>
+                    </a>
+                  </div>
+                  <div class="mock-note">
+                    <b>設計ポイント</b>
+                    <p>実装時はApple Wallet / Google Walletの発行APIを呼び出し、発行履歴とQR照会用トークンを新DBに保存します。</p>
+                  </div>
+                </section>
+
+                <section class="mock-note">
+                  <b>設計ポイント: データの役割</b>
+                  <ul>
+                    <li>既存DB: 氏名、所属、会員状態、支払状況、研修履歴をREAD ONLYで参照。</li>
+                    <li>新DB: ログインコード送信履歴、ログイン履歴、顔写真、Wallet発行情報、監査ログを保存。</li>
+                    <li>前段: WAF、ログインコード送信の回数制限、ログ監査で会員向け公開面を保護。</li>
+                  </ul>
+                </section>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="smsModal" role="dialog" aria-modal="true" aria-labelledby="smsTitle">
+    <div class="modal">
+      <h2 id="smsTitle">携帯電話に届いた6桁の数字を入力してください</h2>
+      <div class="otp-row" aria-label="ログインコード">
+        <input inputmode="numeric" maxlength="1" value="2" aria-label="1桁目">
+        <input inputmode="numeric" maxlength="1" value="8" aria-label="2桁目">
+        <input inputmode="numeric" maxlength="1" value="4" aria-label="3桁目">
+        <input inputmode="numeric" maxlength="1" value="1" aria-label="4桁目">
+        <input inputmode="numeric" maxlength="1" value="7" aria-label="5桁目">
+        <input inputmode="numeric" maxlength="1" value="9" aria-label="6桁目">
+      </div>
+      <div class="mock-note">
+        <b>設計ポイント</b>
+        <p>ログインコード送信回数、コード入力失敗回数、ログイン成功履歴を新DBに保存します。</p>
+      </div>
+      <div class="modal-actions">
+        <button class="secondary" type="button" id="closeSms">戻る</button>
+        <button class="primary" type="button" id="verifySms" style="margin-top:0;">ログインする</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const smsModal = document.getElementById("smsModal");
+    const closeSms = document.getElementById("closeSms");
+    const verifySms = document.getElementById("verifySms");
+    const loginScreen = document.getElementById("loginScreen");
+    const mypageScreen = document.getElementById("mypageScreen");
+    const backToLogin = document.getElementById("backToLogin");
+    const addAppleWallet = document.getElementById("addAppleWallet");
+    const addGoogleWallet = document.getElementById("addGoogleWallet");
+    const toast = document.getElementById("toast");
+    const stepPills = document.querySelectorAll("[data-step-pill]");
+
+    function setStep(step) {
+      stepPills.forEach((pill) => {
+        pill.classList.toggle("active", pill.dataset.stepPill === step);
+      });
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.setTimeout(() => toast.classList.remove("show"), 3600);
+    }
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      smsModal.classList.add("show");
+      setStep("sms");
+      smsModal.querySelector("input").focus();
+    });
+
+    closeSms.addEventListener("click", () => {
+      smsModal.classList.remove("show");
+      setStep("login");
+    });
+
+    verifySms.addEventListener("click", () => {
+      smsModal.classList.remove("show");
+      loginScreen.classList.remove("active");
+      mypageScreen.classList.add("active");
+      setStep("mypage");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      showToast("コード確認が完了しました。マイページに移動します。");
+    });
+
+    backToLogin.addEventListener("click", () => {
+      mypageScreen.classList.remove("active");
+      loginScreen.classList.add("active");
+      setStep("login");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    addAppleWallet.addEventListener("click", (event) => {
+      event.preventDefault();
+      setStep("wallet");
+      showToast("Apple Wallet追加では、実装時に.pkpassを発行してWalletに保存します。");
+    });
+
+    addGoogleWallet.addEventListener("click", (event) => {
+      event.preventDefault();
+      setStep("wallet");
+      showToast("Google Wallet追加では、実装時にGoogle Wallet APIの保存フローを起動します。");
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && smsModal.classList.contains("show")) {
+        smsModal.classList.remove("show");
+        setStep("login");
+      }
+    });
+  </script>
+</body>
+</html>
