@@ -949,7 +949,6 @@
           <div class="dashboard-inner">
             <div class="dashboard-head">
               <div>
-                <p class="eyebrow">ログイン完了</p>
                 <h1 id="mypageTitle">東京都スキー連盟会員マイページ</h1>
               </div>
               <button class="secondary" type="button" id="backToLogin">
@@ -969,11 +968,11 @@
                     </div>
                     <div>
                       <h2>都連花子</h2>
-                      <p class="hint">東京都スキー連盟会員番号 13001234 / 所属: 千代田スキークラブ</p>
+                      <p class="hint">会員番号 13001234 / 団体番号 101 / 所属: 千代田スキークラブ</p>
                       <div class="member-meta">
-                        <span class="status good">有効会員</span>
-                        <span class="status good">2026年度 会費支払済み</span>
-                        <span class="status good">顔写真 登録済み</span>
+                        <span class="status good">2026年度 SAT登録済み</span>
+                        <span class="status good">2026年度 SAJ登録済み</span>
+                        <span class="status good">QR照会 有効</span>
                       </div>
                     </div>
                   </div>
@@ -983,41 +982,69 @@
                   <h2>会員情報</h2>
                   <div class="info-grid">
                     <div class="info-item">
-                      <span>申込状況</span>
-                      <b>2026年度 登録承認済み</b>
+                      <span>会員番号</span>
+                      <b>13001234</b>
                     </div>
                     <div class="info-item">
-                      <span>会員証有効期限</span>
-                      <b>2027年3月31日</b>
+                      <span>SAT会員番号</span>
+                      <b>2601234</b>
                     </div>
                     <div class="info-item">
-                      <span>資格情報</span>
-                      <b>準指導員 / SAJ会員</b>
+                      <span>SAJ会員番号</span>
+                      <b>1234567</b>
                     </div>
                     <div class="info-item">
-                      <span>登録携帯番号</span>
-                      <b>090-****-5678</b>
+                      <span>氏名カナ</span>
+                      <b>トレン ハナコ</b>
+                    </div>
+                    <div class="info-item">
+                      <span>所属団体</span>
+                      <b>101 千代田スキークラブ</b>
+                    </div>
+                    <div class="info-item">
+                      <span>子団体</span>
+                      <b>01 ジュニアチーム</b>
                     </div>
                   </div>
                 </section>
 
                 <section class="panel">
-                  <h2>研修・手続き履歴</h2>
+                  <h2>登録・資格・競技情報</h2>
                   <div class="timeline">
                     <div class="timeline-row">
-                      <time>2026/06/02</time>
-                      <strong>東京都スポーツ指導者研修会 申込済み</strong>
-                      <span class="status good">受付中</span>
+                      <time>SAT登録</time>
+                      <strong>登録最終年度 2026年度</strong>
+                      <span class="status good">当年度</span>
                     </div>
                     <div class="timeline-row">
-                      <time>2026/05/18</time>
-                      <strong>2026年度 会費入金を確認</strong>
-                      <span class="status good">完了</span>
+                      <time>SAJ登録</time>
+                      <strong>登録最終年度 2026年度</strong>
+                      <span class="status good">当年度</span>
                     </div>
                     <div class="timeline-row">
-                      <time>2026/04/10</time>
-                      <strong>所属団体経由で会員登録更新</strong>
-                      <span class="status good">承認済み</span>
+                      <time>保有資格</time>
+                      <strong>スキー準指導員 / スキーB級検定員</strong>
+                      <span class="status good">有効</span>
+                    </div>
+                    <div class="timeline-row">
+                      <time>SAT競技者</time>
+                      <strong>競技者番号 450123 / 登録最終年度 2026年度</strong>
+                      <span class="status good">当年度</span>
+                    </div>
+                    <div class="timeline-row">
+                      <time>SAJ競技者</time>
+                      <strong>AL 20261234 / 登録最終年度 2026年度</strong>
+                      <span class="status good">当年度</span>
+                    </div>
+                    <div class="timeline-row">
+                      <time>FIS競技者</time>
+                      <strong>AL 1234567 / 登録最終年度 2026年度</strong>
+                      <span class="status good">当年度</span>
+                    </div>
+                    <div class="timeline-row">
+                      <time>SAT役職</time>
+                      <strong>教育本部 強化委員 / 任期 2025/04/01 - 2027/03/31</strong>
+                      <span class="status good">任期内</span>
                     </div>
                   </div>
                 </section>
@@ -1036,8 +1063,9 @@
                       </div>
                       <div>
                         <b>都連花子</b>
-                        <span>東京都スキー連盟会員番号 13001234</span>
-                        <span>千代田スキークラブ</span>
+                        <span>会員番号 13001234</span>
+                        <span>SAT会員番号 2601234 / SAJ会員番号 1234567</span>
+                        <span>101 千代田スキークラブ</span>
                         <span>有効期限 2027/03/31</span>
                       </div>
                     </div>
@@ -1079,8 +1107,8 @@
                 <section class="mock-note">
                   <b>設計ポイント: データの役割</b>
                   <ul>
-                    <li>既存DB: 氏名、所属、会員状態、支払状況、研修履歴をREAD ONLYで参照。</li>
-                    <li>新DB: ログインコード送信履歴、ログイン履歴、顔写真、Wallet発行情報、監査ログを保存。</li>
+                    <li>既存DB: 氏名、会員番号、SAT/SAJ会員番号、所属、登録最終年度、資格、競技者番号、SAT役職をREAD ONLYで参照。</li>
+                    <li>新DB: ログインコード送信履歴、ログイン履歴、顔写真、Wallet発行情報、QR照会用トークン、監査ログを保存。</li>
                     <li>前段: WAF、ログインコード送信の回数制限、ログ監査で会員向け公開面を保護。</li>
                   </ul>
                 </section>
